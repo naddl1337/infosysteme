@@ -1,0 +1,48 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="1" name="thymio-II">call sound.system(-1)
+call leds.top(0,0,0)
+call leds.bottom.left(0,0,0)
+call leds.bottom.right(0,0,0)
+call leds.circle(0,0,0,0,0,0,0,0)
+
+onevent prox
+	if prox.horizontal[1] > 500 and prox.horizontal[2] > 500 and prox.horizontal[3] > 500 then
+		motor.left.target = -350
+		motor.right.target = 300
+	end
+	if prox.horizontal[1] &lt; 400 and prox.horizontal[2] &lt; 400 and prox.horizontal[3] &lt; 400 then
+		motor.left.target = 250
+		motor.right.target = 250
+	end
+<toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot>
+<settings advanced-mode="false" color-scheme="0"/>
+
+<buttonset eb0="0" eb1="2" eb2="2" eb3="2" eb4="0" eb5="0" eb6="0" action-name="move" event-name="prox" state="-1" ab0="-350" ab1="300"/>
+
+<buttonset eb0="0" eb1="1" eb2="1" eb3="1" eb4="0" eb5="0" eb6="0" action-name="move" event-name="prox" state="-1" ab0="250" ab1="250"/>
+
+<buttonset/>
+
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+
+
+</network>

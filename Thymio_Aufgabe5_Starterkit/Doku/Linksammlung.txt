@@ -1,0 +1,7 @@
+
+A* Pathfinding
+http://www.youtube.com/watch?v=KNXfSOx4eEE
+
+
+Shortest Path
+http://algs4.cs.princeton.edu/44sp/
