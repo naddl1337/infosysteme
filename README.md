@@ -1,4 +1,4 @@
-infosysteme
+Informationssysteme
 ===========
 
-dinge
+Dijkstra
