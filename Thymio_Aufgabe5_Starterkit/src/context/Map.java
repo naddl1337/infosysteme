@@ -1,6 +1,5 @@
 package context;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
@@ -11,7 +10,7 @@ public class Map {
 	private int sizeY;
 	
 	/** ein Feld auf der Karte */
-	private MapElement [][] element; // Array of MapElement representing the environment
+	private MapElement [][] map; // Array of MapElement representing the environment
 	private double edgelength; // each element in this maps covers edgelength^2 square units.
 	
 	/** X Position des Thymio*/
@@ -34,7 +33,7 @@ public class Map {
 		sizeX = x;
 		sizeY = y;
 		edgelength = l;
-		element = new MapElement[x][y];
+		map = new MapElement[x][y];
 		
 		initMap();
 	}
@@ -45,35 +44,19 @@ public class Map {
 	 * Die Entsprechenden Felder werden als belegt gekennzeichnet.
 	 */
 	private void initMap() {
-		Random r = new Random();
-		ArrayList<Integer> occupiedElements = new ArrayList<Integer>();
-		int numOfElements = sizeX * sizeY;
-		// initialize each element of the map
-		for (int i = 0; i < numOfElements; i++) {
-			occupiedElements.add(0);
-		}
-		// collect N distinct random numbers between 0 and the max number of
-		// MapElements in this Map
-		// find MapElement corresponding to each of the numbers and set its
-		// state to occupied
-		for (int i = 0; i < N; i++) {
-			int occupied = r.nextInt(numOfElements);	
-			if(occupiedElements.get(occupied)!=1)
-			occupiedElements.set(occupied, 1);
-			else {
-				i--;
-			}
-		}
+Random r = new Random();
+		
+		int[] werteX = {r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX), r.nextInt(sizeX)};
+		int[] werteY = {r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY), r.nextInt(sizeY)};
 
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
-				int dinge = occupiedElements.get(y + x * sizeY);
-				if (dinge == 1)
-					element[x][y] = new MapElement(x, y,10, 10,true);
-				else {
-					element[x][y] = new MapElement(x, y,10, 10,false);
-				}
+				map[x][y] = new MapElement(x, y, (int)edgelength, (int)edgelength, false);
 			}
+		}
+		//TODO Klären wie groß ein Feld ist
+		for (int i = 0; i < werteX.length; i++) {
+			map[werteX[i]][werteY[i]].setOccupied(true);
 		}
 	}
 	
@@ -91,7 +74,7 @@ public class Map {
 			str = String.valueOf(y); while(str.length()<2){str = "0" + str;}str=str+" ";
 			System.out.print(str);
 			for (int x = 0; x < sizeX; x++) {
-				MapElement e = element[x][y];
+				MapElement e = map[x][y];
 				
 				if(thyy == y && thyx == x) {
 					System.out.print("T");
@@ -134,7 +117,7 @@ public class Map {
 	    }
 	    int numerator = longest >> 1 ;
 	    for (int i=0;i<=longest;i++) {
-			element[x][y].setOnBeam(true);
+			map[x][y].setOnBeam(true);
 	        numerator += shortest ;
 	        if (!(numerator<longest)) {
 	            numerator -= longest ;

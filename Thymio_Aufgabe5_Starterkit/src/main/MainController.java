@@ -67,39 +67,39 @@ public class MainController extends JFrame {
 	 * und eine Richtung in die er schaut zugewiesen
 	 */
 	public void init() {
-		Random r = new Random();
-
-		myThymio.setX(r.nextInt(MAPSIZE_X));
-		myThymio.setY(r.nextInt(MAPSIZE_Y));
-		myThymio.setOrientation(r.nextInt(360));
+		myThymio.setX(0);
+		myThymio.setY(0);
+		myThymio.setOrientation(0);
 	}
 
 	public void run() {
-		/** die Richtung in die der Thymio schaut*/
-		double orientation = myThymio.getOrientation();
-
-		/** Die Steigung die die Linie hat die den mittlersten Sensor repräsentiert*/
-		double m = Math.tan(Math.toRadians(orientation));
-
-		System.out.println("o: " + orientation);
-		System.out.println("m: " + m);
-
-		/** die x Position von dem Thymio*/
-		double y = myThymio.getY();
-		/** die y Position von dem Thymio*/
-		double x = myThymio.getX();
-		/** die Stelle an der die Linie die durch die Steigung m beschrieben wird die y-Achse schneiden würde*/
-		double t = y - m * x;
-		
-		int[] points = calculateEndpointForBresenham(orientation, m, t);
-		
-		//set H_Value of every Mapfield
-		myMap.h_Value(points[0],points[1]); 
-		
-		System.out.println("x: " + x + "   y: " + y + "   t: " + t +" x2: " + points[0] + " y2: "
-				+ points[1]+"\n");
-		myMap.followBeam((int)x, (int)y, points[0], points[1]);
-		
+//		/** die Richtung in die der Thymio schaut*/
+//		double orientation = myThymio.getOrientation();
+//
+//		/** Die Steigung die die Linie hat die den mittlersten Sensor repräsentiert*/
+//		double m = Math.tan(Math.toRadians(orientation));
+//
+//		System.out.println("o: " + orientation);
+//		System.out.println("m: " + m);
+//
+//		/** die x Position von dem Thymio*/
+//		double y = myThymio.getY();
+//		/** die y Position von dem Thymio*/
+//		double x = myThymio.getX();
+//		/** die Stelle an der die Linie die durch die Steigung m beschrieben wird die y-Achse schneiden würde*/
+//		double t = y - m * x;
+//		
+//		int[] points = calculateEndpointForBresenham(orientation, m, t);
+//		
+//		//set H_Value of every Mapfield
+//		myMap.h_Value(points[0],points[1]); 
+//		
+//		System.out.println("x: " + x + "   y: " + y + "   t: " + t +" x2: " + points[0] + " y2: "
+//				+ points[1]+"\n");
+//		myMap.followBeam((int)x, (int)y, points[0], points[1]);
+//		
+//		myMap.printMap();
+		myMap.followBeam(myThymio.getX(), myThymio.getY(), MAPSIZE_X-1, MAPSIZE_Y-1);
 		myMap.printMap();
 	}
 
@@ -120,7 +120,7 @@ public class MainController extends JFrame {
 	 * @param t der y-Achsenabschnitt
 	 * @return die x und y Koordinaten der Endpunktes
 	 */
-	private int[] calculateEndpointForBresenham(double orientation, double m, double t) {
+	/*private int[] calculateEndpointForBresenham(double orientation, double m, double t) {
 		double y2d = m * (MAPSIZE_X - 1) + t;
 		double x2d = (MAPSIZE_X - 1);
 		if(t >= 0 && t <= (MAPSIZE_Y-1) && orientation < 270 && orientation > 90) {
@@ -149,7 +149,7 @@ public class MainController extends JFrame {
 		res[0] = x2;		
 		res[1] = y2;
 		return res;
-	}
+	}*/
 
 	public static void main(String[] args) {
 		MainController mc = new MainController();
@@ -185,7 +185,7 @@ public class MainController extends JFrame {
 		BigDecimal centimeterwert = new BigDecimal("10");
 		int senorValue = Integer.valueOf(getDistanceInSensorvalue(
 				centimeterwert, polynom_funkt_getSensor).intValue());
-		System.out.println(senorValue);
+		System.out.println("Sensor Wert: " + centimeterwert + " -> "+ senorValue);
 		return senorValue;
 	}
 
@@ -199,12 +199,10 @@ public class MainController extends JFrame {
 		BigDecimal sensorWert = new BigDecimal("4000");
 		int centimeterValue = Integer.valueOf(getDistanceInSensorvalue(
 				sensorWert, polynom_funkt_getCM).intValue());
-		System.out.println(centimeterValue);
+		System.out.println("Centimeter Wert: " + sensorWert + " -> "+ centimeterValue);
 		return centimeterValue;
 	}
 	
-	
-
 	/**
 	 * @param value
 	 * @param hoch
